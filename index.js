@@ -1,16 +1,19 @@
 import express from "express"
 import cors from "cors"
 import chalk from "chalk"
+import joi from "joi"
+import dotenv from "dotenv"
+dotenv.config()
 
-import database from "./database.js"
+import connection from "./database.js"
+import categoriesRouter from "./routes/categoriesRouter.js"
 
 const app = express()
 app.use(cors())
 app.use(express.json())
 
-app.get("/", (req, res) => {
-    res.send("Online")
-})
+// Routers
+app.use(categoriesRouter)
 
 app.listen(process.env.PORT || 4000, () =>
     console.log(

@@ -12,11 +12,11 @@ export async function validateCategory(req, res, next) {
             "SELECT * FROM categories WHERE name= $1",
             [req.body.name]
         )
-        if (check.rows.length > 0) {
+        if (check.rows[0]) {
             return res.sendStatus(409)
         }
     } catch (e) {
-        res.status(500).send(e)
+        return res.status(500).send(e)
     }
 
     next()

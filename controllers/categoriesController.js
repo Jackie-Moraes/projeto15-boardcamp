@@ -17,7 +17,6 @@ export async function postCategory(req, res) {
         )
         return res.sendStatus(201)
     } catch (e) {
-        console.log(e)
         res.status(500).send(e)
     }
 }

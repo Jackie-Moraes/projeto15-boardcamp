@@ -1,13 +1,28 @@
 import connection from "../database.js"
 
 export async function getGames(req, res) {
+    const { name } = req.query
     try {
-        const result = await connection.query(`
-        SELECT games.*, categories.name AS "categoryName"
-        FROM games
-        JOIN categories
-        ON games."categoryId" = categories.id`)
-        res.status(200).send(result.rows)
+        if (!name) {
+            const result = await connection.query(
+                `SELECT games.*, categories.name AS "categoryName"
+                FROM games
+                JOIN categories
+                ON games."categoryId" = categories.id`
+            )
+            res.status(200).send(result.rows)
+        } else {
+            const result = await connection.query(
+                `SELECT games.*, categories.name AS "categoryName"
+                FROM games
+                JOIN categories
+                ON games."categoryId" = categories.id
+                WHERE games.name LIKE $1
+                `,
+                [`${name}%`]
+            )
+            res.status(200).send(result.rows)
+        }
     } catch (e) {
         res.status(500).send(e)
     }

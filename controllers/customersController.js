@@ -33,7 +33,7 @@ export async function getCostumerById(req, res) {
 
         if (!result.rows[0]) return res.sendStatus(404)
 
-        res.status(200).send(result.rows)
+        res.status(200).send(result.rows[0])
     } catch (e) {
         res.status(500).send(e)
     }
@@ -65,7 +65,6 @@ export async function updateUser(req, res) {
         )
         res.sendStatus(200)
     } catch (e) {
-        console.log(e)
         res.status(500).send(e)
     }
 }
